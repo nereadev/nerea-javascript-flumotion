@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container } from "react-bootstrap";
+import AlbumFilter from "./components/AlbumFilter";
+import AuthorFilter from "./components/TermFilter";
+import SearchContext from "./contexts/SearchContext";
 
 function App() {
+  const [author, setAuthor] = useState("");
+  const [albums, setAlbums] = useState([]);
+  const resetAuthor = () => {
+    setAuthor("")
+    setAlbums([])
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Container fluid>
+      <SearchContext.Provider
+        value={{
+          author,
+          setAuthor,
+          albums,
+          setAlbums,
+          resetAuthor
+        }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <AuthorFilter/>
+      <AlbumFilter/>
+    </SearchContext.Provider>
+  </Container >
   );
 }
 
